@@ -1,62 +1,86 @@
-# Monitoring System Performance with Netdata
+# Real-Time System Monitoring with Netdata
 
 ## Overview
-This project demonstrates the installation and usage of **Netdata**, a powerful, open-source monitoring tool, to visualize system and application performance metrics such as CPU, memory, and disk usage. Running Netdata in a Docker container allows for real-time monitoring of system resources, providing valuable insights into performance and resource utilization.
+This project demonstrates the installation and configuration of **Netdata**, an open-source, real-time monitoring tool, to track system and application performance metrics, including CPU, memory, and disk usage. Running Netdata in a Docker container enables developers to visualize resource usage and quickly identify bottlenecks.
 
-Monitoring system resources is crucial for ensuring reliability, optimizing performance, and quickly diagnosing potential issues in development or production environments. By using Netdata, we can gain a detailed understanding of their infrastructure at a glance.
+> **Challenge:** In a resource-constrained environment (GitHub Codespaces), the standard Netdata dashboard rendered but displayed **only a single line**, making it unusable.  
+> **Solution:** A **lite version** of the dashboard was created to ensure full visibility of key metrics while maintaining performance.
+
+Monitoring system resources is essential for reliability, performance optimization, and proactive troubleshooting in both development and production environments.
+
+---
 
 ## Tools Used
-- **Netdata**: Open-source system and application performance monitoring tool.
-- **Docker**: Containerization platform used to run Netdata.
-- **GitHub Codespaces**: Cloud-based development environment hosting the Docker container.
+- **Netdata** – Open-source system and application performance monitoring.  
+- **Docker** – Containerization platform to run Netdata.  
+- **GitHub Codespaces** – Cloud-based development environment hosting the container.  
 
-## Solution and Steps
-To run Netdata successfully and access the full system metrics in a Codespaces environment, use the following command:
+---
+
+## Implementation Steps
+
+### Running Netdata
+Use the following command to run Netdata with full host system access:
 
 ```bash
 docker run -d --name=netdata -p 19999:19999 --privileged --pid=host netdata/netdata
 ```
 
-### Explanation of Key Flags
-- `--privileged`: Grants the container extended permissions to access host resources.
-- `--pid=host`: Allows the container to see and monitor host system processes.
-- `-p 19999:19999`: Maps the Netdata dashboard to the host port 19999 for easy browser access.
+**Key Flags Explained:**
+- `--privileged` → Grants extended permissions to access host resources.  
+- `--pid=host` → Enables monitoring of host processes.  
+- `-p 19999:19999` → Maps the dashboard to the host port for browser access.  
 
-## Debugging and Troubleshooting
+### Lite Dashboard Configuration
+- **Problem:** Full dashboard rendered but only showed a single line due to Codespaces’ resource constraints.  
+- **Solution:** Configured a **lite version of the dashboard**, ensuring it rendered correctly while displaying all essential metrics (CPU, memory, disk).  
+- **Impact:** Achieved a fully functional, lightweight monitoring dashboard that could run reliably in a constrained environment.
+
+---
+
+## Debugging & Troubleshooting
 
 ### 1. Container Name Conflict
-- **Issue**: Error stating the container name `netdata` was already in use.
-- **Solution**: Remove the existing container:
+- **Issue:** Error: container name `netdata` already in use.  
+- **Solution:** Remove existing container:
 ```bash
 docker stop netdata
 docker rm netdata
 ```
 
-### 2. Dashboard Initially Empty
-- **Issue**: Dashboard loaded but no metrics were visible.
-- **Reason**: The container couldn’t access host system metrics.
-- **Solution**: Added `--privileged` and `--pid=host` flags to grant proper access.
+### 2. Empty Dashboard
+- **Issue:** Dashboard loaded but no metrics were visible.  
+- **Reason:** Container lacked access to host system metrics.  
+- **Solution:** Added `--privileged` and `--pid=host` flags.
 
-### 3. Metrics Display Issues
-- **Issue**: Initially, only some metrics were visible.
-- **Solution**: Adjusted container configuration to ensure all relevant system metrics, including CPU, memory, and disk usage, were properly displayed.
+### 3. Single-Line Dashboard
+- **Issue:** Full dashboard rendered only as a single line, making it unusable.  
+- **Solution:** Created a **lite version** for proper rendering and visualization of all metrics.
+
+---
 
 ## Deliverables
 
-### 1. Metrics Overview Screenshot
-![Metrics Overview](<img width="1366" height="768" alt="Screenshot (13)" src="https://github.com/user-attachments/assets/9b46e152-1075-49ad-b9ae-a89f803dff37" />
-)
-*Shows key system metrics, including CPU, memory, and disk usage, highlighting Netdata’s real-time monitoring functionality.*
+### 1. Lite v Dashboard Screenshot
 
-### 2. Full Dashboard Screenshot
-![Full Dashboard](<img width="1366" height="768" alt="Screenshot (12)" src="https://github.com/user-attachments/assets/e81c4c58-325c-4544-96fc-acfa9fff7373" />
-)
-*Displays the complete Netdata dashboard with all metrics fully populated, demonstrating the effectiveness of the monitoring setup.*
+<img width="1366" height="768" alt="Screenshot (12)" src="https://github.com/user-attachments/assets/48dfed6e-dbd3-4b0b-a6bc-75558aeae6c6" />
+
+
+*This Shows the fully functional lite dashboard with all key metrics populated, including CPU, memory, and disk usage.*
+
+
+### 2. Metrics Overview Screenshot
+
+<img width="1366" height="768" alt="Screenshot (13)" src="https://github.com/user-attachments/assets/dd414320-4f34-4423-901d-8f4ec43e9fbb" />
+
+
+*This *Shows key system metrics, including CPU, memory, and disk usage etc.*
+
+---
 
 ## Importance of System Monitoring
-Monitoring system resources is essential for:
-- **Performance Optimization**: Identify bottlenecks and improve application efficiency.
-- **Proactive Troubleshooting**: Detect issues before they escalate into critical failures.
-- **Resource Management**: Make informed decisions on scaling and resource allocation.
+Monitoring system resources is critical for:
+- **Performance Optimization** – Identify bottlenecks and optimize resource usage.  
+- **Proactive Troubleshooting** – Detect and resolve issues before they escalate.  
+- **Resource Management** – Make informed scaling and infrastructure decisions.  
 
-By completing this setup, you gain practical experience with containerized monitoring solutions and improve your ability to manage and optimize system performance in real-world environments.
